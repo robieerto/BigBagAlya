@@ -1,25 +1,27 @@
 <template>
-    <h1 id="tableLabel">Weather forecast</h1>
+    <h1 id="tableLabel">Záznamy Big bag</h1>
 
-    <p>This component demonstrates fetching data from the server.</p>
+    <p v-if="!records"><em>Loading...</em></p>
 
-    <p v-if="!forecasts"><em>Loading...</em></p>
-
-    <table class='table table-striped' aria-labelledby="tableLabel" v-if="forecasts">
+    <table class='table table-striped' aria-labelledby="tableLabel" v-if="records">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Id</th>
+                <th>Zariadenie číslo</th>
+                <th>Program číslo</th>
+                <th>Užívateľ číslo</th>
+                <th>Váha</th>
+                <th>Čas</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="forecast of forecasts" v-bind:key="forecast">
-                <td>{{ forecast.date }}</td>
-                <td>{{ forecast.temperatureC }}</td>
-                <td>{{ forecast.temperatureF }}</td>
-                <td>{{ forecast.summary }}</td>
+            <tr v-for="record of records" v-bind:key="record">
+                <td>{{ record.id }}</td>
+                <td>{{ record.zariadenieCislo }}</td>
+                <td>{{ record.programCislo }}</td>
+                <td>{{ record.uzivatelCislo }}</td>
+                <td>{{ record.vaha }}</td>
+                <td>{{ new Date(record.cas).toLocaleString('sk-SK') }}</td>
             </tr>
         </tbody>
     </table>
@@ -32,14 +34,15 @@
         name: "FetchData",
         data() {
             return {
-                forecasts: []
+                records: []
             }
         },
         methods: {
-            getWeatherForecasts() {
-                axios.get('/weatherforecast')
+            getRecords() {
+                axios.get('/zaznamy')
                     .then((response) => {
-                        this.forecasts =  response.data;
+                        this.records =  response.data;
+                        console.log(this.records);
                     })
                     .catch(function (error) {
                         alert(error);
@@ -47,7 +50,7 @@
             }
         },
         mounted() {
-            this.getWeatherForecasts();
+            this.getRecords();
         }
     }
 </script>

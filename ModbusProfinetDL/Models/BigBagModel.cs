@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace ModbusProfinetDL.Models
 {
-    public class BigBagModel
-    {
-        public DateTime Cas { get; set; }
-        public int Program { get; set; }
-        public int Uzivatel { get; set; }
-        public float Vaha { get; set; }
-        public int Rok { get; set; }
-        public int Mesiac { get; set; }
-        public int Den { get; set; }
-        public int Hodiny { get; set; }
-        public int Minuty { get; set; }
-    }
+	public class BigBagModel
+	{
+		public int Zariadenie;
+		public int Program { get; set; }
+		public int Uzivatel { get; set; }
+		public float Vaha { get; set; }
+		public DateTime Cas { get; set; }
+		public int Rok { get; set; }
+		public int Mesiac { get; set; }
+		public int Den { get; set; }
+		public int Hodiny { get; set; }
+		public int Minuty { get; set; }
+	}
 }

@@ -17,6 +17,7 @@ namespace ModbusProfinetDL
 		private static short slot = 1;
 		private static Plc plc = new Plc(CpuType.S71200, ipAddr, ipPort, rack, slot);
 		private static int db = 5;
+		private static int zariadenie = 0;
 
 		public static bool isConnected = true;
 
@@ -57,6 +58,7 @@ namespace ModbusProfinetDL
 					data.Add(new BigBagModel()
 					{
 						Cas = DateTime.Now,
+						Zariadenie = zariadenie,
 						Program = (ushort)plc.Read($"DB{db}.DBW{dbw}"),
 						Uzivatel = (ushort)plc.Read($"DB{db}.DBW{dbw + 2}"),
 						Vaha = (ushort)plc.Read($"DB{db}.DBW{dbw + 4}") / 10.0f,
