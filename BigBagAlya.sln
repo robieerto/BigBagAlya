@@ -12,7 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgramConsole", "ProgramCo
 		{CA5B80C6-2CD7-4CE4-BF55-EF57CDB46BE8} = {CA5B80C6-2CD7-4CE4-BF55-EF57CDB46BE8}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebVue", "WebVue\WebVue.csproj", "{B539B03B-B624-4E5F-9303-4ADB83300EDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebVue", "WebVue\WebVue.csproj", "{B539B03B-B624-4E5F-9303-4ADB83300EDA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA5B80C6-2CD7-4CE4-BF55-EF57CDB46BE8} = {CA5B80C6-2CD7-4CE4-BF55-EF57CDB46BE8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

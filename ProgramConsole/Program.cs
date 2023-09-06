@@ -12,10 +12,8 @@ namespace ProgramConsole
 	{
 		static void Main(string[] args)
 		{
-			if (!Directory.Exists(CsvLayer.dataPath))
-			{
-				Directory.CreateDirectory(CsvLayer.dataPath);
-			}
+			var dataPath = AppDomain.CurrentDomain.BaseDirectory + "\\data";
+			Library.Initialize(dataPath);
 			Library.WriteLog("Sluzba bola spustena");
 
 			Task.Run(() => DataCommunication.ProfinetTask());

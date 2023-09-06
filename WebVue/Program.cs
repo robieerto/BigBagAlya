@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ModbusProfinetDL;
+using WebVue.DAL;
+using WebVue.DAL.Repositories;
 
 namespace WebVue
 {
@@ -13,6 +16,8 @@ namespace WebVue
 	{
 		public static void Main(string[] args)
 		{
+			Task.Run(async () => DataCommunication.ProfinetTask());
+
 			CreateHostBuilder(args).Build().Run();
 		}
 

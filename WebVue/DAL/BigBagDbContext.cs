@@ -16,6 +16,11 @@ namespace WebVue.DAL
 		public DbSet<Zaznam> Uzivatelia { get; set; }
 		public DbSet<Zaznam> Programy { get; set; }
 
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			base.OnConfiguring(optionsBuilder);
+		}
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			int i = 0;

@@ -10,16 +10,16 @@ namespace ModbusProfinetDL
 {
 	public static class DataCommunication
 	{
-		static List<BigBagModel> dataProfinet;
-		static readonly bool vycitajData1 = int.Parse(ConfigurationManager.AppSettings["vycitajData1"]) != 0;
-
 		public static void ProfinetTask()
 		{
-			while (vycitajData1)
+			List<BigBagModel> dataProfinet;
+			var profinet = new ProfinetS7("192.168.1.100", 8881, 1);
+
+			while (true)
 			{
 				try
 				{
-					dataProfinet = ProfinetS7.ReadData();
+					dataProfinet = profinet.ReadData();
 					if (dataProfinet != null)
 					{
 						CsvLayer.SaveBigBagData(dataProfinet);

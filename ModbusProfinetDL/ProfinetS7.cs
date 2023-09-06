@@ -1,42 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ModbusProfinetDL.Models;
 using S7.Net;
 
 namespace ModbusProfinetDL
 {
-	public static class ProfinetS7
+	public class ProfinetS7
 	{
-		private static string ipAddr = ConfigurationManager.AppSettings["ipAdresa1"];
-		private static int ipPort = int.Parse(ConfigurationManager.AppSettings["port1"]);
-		private static short rack = 0;
-		private static short slot = 1;
-		private static Plc plc = new Plc(CpuType.S71200, ipAddr, ipPort, rack, slot);
-		private static int db = 5;
-		private static int zariadenie = 0;
+		private readonly short _rack = 0;
+		private readonly short _slot = 1;
+		private readonly int _db = 5;
+		private string _ipAddr;
+		private int _port;
+		private int _zariadenie;
+		private Plc _plc;
 
-		public static bool isConnected = true;
+		public bool isConnected = true;
 
-		public static List<BigBagModel> ReadData()
+		public ProfinetS7(string ipAddr, int port, int zariadenie)
+		{
+			_ipAddr = ipAddr;
+			_port = port;
+			_zariadenie = zariadenie;
+			_plc = new Plc(CpuType.S71200, ipAddr, port, _rack, _slot);
+		}
+
+		public List<BigBagModel> ReadData()
 		{
 			try
 			{
-				if (plc.IsConnected == false)
+				if (_plc.IsConnected == false)
 				{
 					try
 					{
-						plc.Open();
+						_plc.Open();
 						Library.WriteLog("Profinet pripojeny");
 					}
 					catch (Exception ex)
 					{
 						if (isConnected)
 						{
-							Library.WriteLog("Spojenie Profinet neuspesne:");
+							Library.WriteLog($"Spojenie Profinet zariadenie {_zariadenie} neuspesne:");
 							Library.WriteLog(ex);
 						}
 						isConnected = false;
@@ -45,7 +49,7 @@ namespace ModbusProfinetDL
 				}
 				isConnected = true;
 
-				int bufferCount = (ushort)plc.Read($"DB{db}.DBW2");
+				int bufferCount = (ushort)_plc.Read($"DB{_db}.DBW2");
 				if (bufferCount < 1)
 				{
 					return null;
@@ -58,21 +62,21 @@ namespace ModbusProfinetDL
 					data.Add(new BigBagModel()
 					{
 						Cas = DateTime.Now,
-						Zariadenie = zariadenie,
-						Program = (ushort)plc.Read($"DB{db}.DBW{dbw}"),
-						Uzivatel = (ushort)plc.Read($"DB{db}.DBW{dbw + 2}"),
-						Vaha = (ushort)plc.Read($"DB{db}.DBW{dbw + 4}") / 10.0f,
-						Rok = (ushort)plc.Read($"DB{db}.DBW{dbw + 6}"),
-						Mesiac = (ushort)plc.Read($"DB{db}.DBW{dbw + 8}"),
-						Den = (ushort)plc.Read($"DB{db}.DBW{dbw + 10}"),
-						Hodiny = (ushort)plc.Read($"DB{db}.DBW{dbw + 12}"),
-						Minuty = (ushort)plc.Read($"DB{db}.DBW{dbw + 14}"),
+						Zariadenie = _zariadenie,
+						Program = (ushort)_plc.Read($"DB{_db}.DBW{dbw}"),
+						Uzivatel = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 2}"),
+						Vaha = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 4}") / 10.0f,
+						Rok = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 6}"),
+						Mesiac = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 8}"),
+						Den = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 10}"),
+						Hodiny = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 12}"),
+						Minuty = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 14}"),
 					});
 
 					dbw += 16;
 				}
 
-				plc.Write($"DB{db}.DBX0.0", true);
+				_plc.Write($"DB{_db}.DBX0.0", true);
 
 				return data;
 			}

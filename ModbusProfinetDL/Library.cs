@@ -7,66 +7,60 @@ using System.IO;
 
 namespace ModbusProfinetDL
 {
-    public static class Library
-    {
-        public static void WriteLog(Exception ex)
-        {
-            try
-            {
-                using (var sw = new StreamWriter(CsvLayer.dataPath + "\\log.txt", true))
-                {
-                    sw.WriteLine(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
-                }
+	public static class Library
+	{
+		public static string dataPath;
 
-            }
-            catch
-            {
-            }
-        }
+		public static void Initialize(string pathData)
+		{
+			dataPath = pathData;
+			if (!Directory.Exists(dataPath))
+			{
+				Directory.CreateDirectory(dataPath);
+			}
+		}
 
-        public static void WriteLog(string Message)
-        {
-            try
-            {
-                using (var sw = new StreamWriter(CsvLayer.dataPath + "\\log.txt", true))
-                {
-                    sw.WriteLine(DateTime.Now.ToString() + ": " + Message);
+		public static void WriteLog(Exception ex)
+		{
+			try
+			{
+				using (var sw = new StreamWriter(dataPath + "\\log.txt", true))
+				{
+					sw.WriteLine(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
+				}
 
-                }
-            }
-            catch
-            {
-            }
-        }
+			}
+			catch
+			{
+			}
+		}
 
-        public static void WriteLastTimeModbus()
-        {
-            try
-            {
-                using (var sw = new StreamWriter(CsvLayer.dataPath + "\\betonarka.txt", false))
-                {
-                    sw.WriteLine(DateTime.Now.ToString() + ": Posledne vycitane data");
+		public static void WriteLog(string Message)
+		{
+			try
+			{
+				using (var sw = new StreamWriter(dataPath + "\\log.txt", true))
+				{
+					sw.WriteLine(DateTime.Now.ToString() + ": " + Message);
+				}
+			}
+			catch
+			{
+			}
+		}
 
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        public static void WriteLastTimeProfinet()
-        {
-            try
-            {
-                using (var sw = new StreamWriter(CsvLayer.dataPath + "\\palety.txt", false))
-                {
-                    sw.WriteLine(DateTime.Now.ToString() + ": Posledne vycitane data");
-
-                }
-            }
-            catch
-            {
-            }
-        }
-    }
+		public static void WriteLastTime()
+		{
+			try
+			{
+				using (var sw = new StreamWriter(dataPath + "\\lastTimeData.txt", false))
+				{
+					sw.WriteLine(DateTime.Now.ToString() + ": Posledne vycitane data");
+				}
+			}
+			catch
+			{
+			}
+		}
+	}
 }

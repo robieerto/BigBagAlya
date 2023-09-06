@@ -17,9 +17,7 @@ namespace ModbusProfinetDL
 		public const string dateFormat = "dd-MM-yyyy";
 		public const string dateTimeFormat = "HH:mm:ss dd-MM-yyyy";
 		public const string dateTimeFormatCsv = "HH:mm:ss_dd-MM-yyyy";
-		public static readonly string dataPath = ConfigurationManager.AppSettings["cestaData"].Length > 0
-												? ConfigurationManager.AppSettings["cestaData"]
-												: AppDomain.CurrentDomain.BaseDirectory + "\\data";
+
 		public static string lastTime;
 
 		private static string GetSavePath(DateTime now)
@@ -28,7 +26,7 @@ namespace ModbusProfinetDL
 			var currYear = now.ToString("yyyy");
 			var currMonth = now.ToString("MMMM", ci);
 			var currDate = now.ToString(dateFormat);
-			var savePath = $"{dataPath}\\{currYear}\\{currMonth}\\{currDate}";
+			var savePath = $"{Library.dataPath}\\{currYear}\\{currMonth}\\{currDate}";
 			return savePath;
 		}
 

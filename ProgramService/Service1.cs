@@ -13,39 +13,37 @@ using System.IO;
 
 namespace ProgramService
 {
-    public partial class BetonarkaModbusProfinet : ServiceBase
-    {
-        private Timer timer1 = null;
+	public partial class BetonarkaModbusProfinet : ServiceBase
+	{
+		private Timer timer1 = null;
 
-        public BetonarkaModbusProfinet()
-        {
-            InitializeComponent();
-        }
+		public BetonarkaModbusProfinet()
+		{
+			InitializeComponent();
+		}
 
-        protected override void OnStart(string[] args)
-        {
-            timer1 = new Timer();
-            this.timer1.Interval = 60000; //every 1 min
-            this.timer1.Elapsed += new System.Timers.ElapsedEventHandler(this.timer1_Tick);
-            timer1.Enabled = true;
+		protected override void OnStart(string[] args)
+		{
+			timer1 = new Timer();
+			this.timer1.Interval = 60000; //every 1 min
+			this.timer1.Elapsed += new System.Timers.ElapsedEventHandler(this.timer1_Tick);
+			timer1.Enabled = true;
 
-            if (!Directory.Exists(CsvLayer.dataPath))
-            {
-                Directory.CreateDirectory(CsvLayer.dataPath);
-            }
-            Library.WriteLog("Sluzba bola spustena");
+			var dataPath = AppDomain.CurrentDomain.BaseDirectory + "\\data";
+			Library.Initialize(dataPath);
+			Library.WriteLog("Sluzba bola spustena");
 
-            Task.Run(() => DataCommunication.ProfinetTask());
-        }
+			Task.Run(() => DataCommunication.ProfinetTask());
+		}
 
-        private void timer1_Tick(object sender, ElapsedEventArgs e)
-        {
-        }
+		private void timer1_Tick(object sender, ElapsedEventArgs e)
+		{
+		}
 
-        protected override void OnStop()
-        {
-            timer1.Enabled = false;
-            Library.WriteLog("Sluzba bola stopnuta");
-        }
-    }
+		protected override void OnStop()
+		{
+			timer1.Enabled = false;
+			Library.WriteLog("Sluzba bola stopnuta");
+		}
+	}
 }
