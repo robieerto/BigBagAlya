@@ -3,16 +3,16 @@
 	"Device1": {
 		"ReadData": true,
 		"IpAddress": "192.168.1.100",
-		"Port": "8881"
+		"Port": "102"
 	},
 	"Device2": {
 		"ReadData": false,
 		"IpAddress": "192.168.1.102",
-		"Port": "8881"
+		"Port": "102"
 	},
 	"Device3": {
 		"ReadData": false,
 		"IpAddress": "192.168.1.104",
-		"Port": "8881"
+		"Port": "102"
 	}
 }

@@ -16,7 +16,7 @@ namespace WebVue
 	{
 		public static void Main(string[] args)
 		{
-			Task.Run(async () => DataCommunication.ProfinetTask());
+			Task.Run(() => DataCommunication.ProfinetTask());
 
 			CreateHostBuilder(args).Build().Run();
 		}

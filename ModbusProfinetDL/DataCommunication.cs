@@ -10,28 +10,39 @@ namespace ModbusProfinetDL
 {
 	public static class DataCommunication
 	{
+		public static List<BigBagModel> dataProfinet;
+		public static ProfinetS7 profinet;
+
 		public static void ProfinetTask()
 		{
-			List<BigBagModel> dataProfinet;
-			var profinet = new ProfinetS7("192.168.1.100", 8881, 1);
-
-			while (true)
+			try
 			{
-				try
-				{
-					dataProfinet = profinet.ReadData();
-					if (dataProfinet != null)
-					{
-						CsvLayer.SaveBigBagData(dataProfinet);
-					}
-				}
-				catch (Exception ex)
-				{
-					Library.WriteLog(ex);
-				}
+				Library.WriteLog("Sluzba bola spustena");
+				profinet = new ProfinetS7("192.168.1.100", 8881, 1);
 
-				Task.Delay(2000);
+				while (true)
+				{
+					try
+					{
+						dataProfinet = profinet.ReadData();
+						if (dataProfinet != null)
+						{
+							CsvLayer.SaveBigBagData(dataProfinet);
+						}
+					}
+					catch (Exception ex)
+					{
+						Library.WriteLog(ex);
+					}
+
+					Task.Delay(3000);
+				}
 			}
+			catch (Exception ex)
+			{
+				Library.WriteLog(ex);
+			}
+
 		}
 	}
 }

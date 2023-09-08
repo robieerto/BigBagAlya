@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using ModbusProfinetDL.Models;
 using S7.Net;
 
@@ -12,42 +13,50 @@ namespace ModbusProfinetDL
 		private readonly int _db = 5;
 		private string _ipAddr;
 		private int _port;
-		private int _zariadenie;
 		private Plc _plc;
 
+		public int zariadenie;
 		public bool isConnected = true;
 
 		public ProfinetS7(string ipAddr, int port, int zariadenie)
 		{
+			this.zariadenie = zariadenie;
 			_ipAddr = ipAddr;
 			_port = port;
-			_zariadenie = zariadenie;
 			_plc = new Plc(CpuType.S71200, ipAddr, port, _rack, _slot);
+		}
+
+		public bool CheckConnection()
+		{
+			if (_plc.IsConnected == false)
+			{
+				try
+				{
+					_plc.Open();
+					Library.WriteLog("Profinet pripojeny");
+					isConnected = true;
+				}
+				catch (Exception ex)
+				{
+					if (isConnected)
+					{
+						Library.WriteLog($"Spojenie Profinet zariadenie {zariadenie} neuspesne:");
+						Library.WriteLog(ex);
+					}
+					isConnected = false;
+				}
+			}
+			return isConnected;
 		}
 
 		public List<BigBagModel> ReadData()
 		{
 			try
 			{
-				if (_plc.IsConnected == false)
+				if (CheckConnection() == false)
 				{
-					try
-					{
-						_plc.Open();
-						Library.WriteLog("Profinet pripojeny");
-					}
-					catch (Exception ex)
-					{
-						if (isConnected)
-						{
-							Library.WriteLog($"Spojenie Profinet zariadenie {_zariadenie} neuspesne:");
-							Library.WriteLog(ex);
-						}
-						isConnected = false;
-						return null;
-					}
+					return null;
 				}
-				isConnected = true;
 
 				int bufferCount = (ushort)_plc.Read($"DB{_db}.DBW2");
 				if (bufferCount < 1)
@@ -56,13 +65,13 @@ namespace ModbusProfinetDL
 				}
 
 				var data = new List<BigBagModel>();
-				var dbw = 4;
+				var dbw = 5638;
 				for (var i = 0; i < bufferCount; i++)
 				{
 					data.Add(new BigBagModel()
 					{
 						Cas = DateTime.Now,
-						Zariadenie = _zariadenie,
+						Zariadenie = zariadenie,
 						Program = (ushort)_plc.Read($"DB{_db}.DBW{dbw}"),
 						Uzivatel = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 2}"),
 						Vaha = (ushort)_plc.Read($"DB{_db}.DBW{dbw + 4}") / 10.0f,
@@ -79,6 +88,44 @@ namespace ModbusProfinetDL
 				_plc.Write($"DB{_db}.DBX0.0", true);
 
 				return data;
+			}
+			catch (Exception ex)
+			{
+				Library.WriteLog(ex);
+				return null;
+			}
+		}
+
+		public List<string> ReadArray(int count, int startDbw, string zmenaDbx)
+		{
+			try
+			{
+				if (CheckConnection() == false)
+				{
+					return null;
+				}
+
+				bool zmena = (bool)_plc.Read($"DB{_db}.DBX{zmenaDbx}");
+				if (zmena == false)
+				{
+					return null;
+				}
+
+				var zaznamy = new List<string>();
+				var dbw = startDbw;
+				var length = (byte)_plc.Read(DataType.DataBlock, 5, dbw, VarType.Byte, 1);
+				dbw += 2;
+				for (var i = 0; i < count; i++)
+				{
+					var zaznam = (string)_plc.Read(DataType.DataBlock, 5, dbw, VarType.String, length);
+					zaznam = Regex.Replace(zaznam, @"\p{C}+", string.Empty); // delete non-printable chars
+					zaznamy.Add(zaznam);
+					dbw += length + 2;
+				}
+
+				_plc.Write($"DB{_db}.DBX{zmenaDbx}", false);
+
+				return zaznamy;
 			}
 			catch (Exception ex)
 			{

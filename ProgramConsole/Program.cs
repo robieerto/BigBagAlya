@@ -12,9 +12,8 @@ namespace ProgramConsole
 	{
 		static void Main(string[] args)
 		{
-			var dataPath = AppDomain.CurrentDomain.BaseDirectory + "\\data";
-			Library.Initialize(dataPath);
-			Library.WriteLog("Sluzba bola spustena");
+			CsvLayer.filename = "dataVaha";
+			Library.Initialize(AppDomain.CurrentDomain.BaseDirectory + "\\data");
 
 			Task.Run(() => DataCommunication.ProfinetTask());
 			Console.ReadKey();

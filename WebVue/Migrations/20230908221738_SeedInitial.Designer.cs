@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebVue.DAL;
 
 namespace WebVue.Migrations
 {
     [DbContext(typeof(BigBagDbContext))]
-    partial class BigBagDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230908221738_SeedInitial")]
+    partial class SeedInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -581,151 +583,6 @@ namespace WebVue.Migrations
                     b.HasIndex("ZariadenieId");
 
                     b.ToTable("Zaznamy");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 31,
-                            CasVazenia = new DateTime(2023, 9, 9, 0, 17, 58, 810, DateTimeKind.Local).AddTicks(5230),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(8556),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 32,
-                            CasVazenia = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9092),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9109),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 91.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 33,
-                            CasVazenia = new DateTime(2023, 9, 11, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9115),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9131),
-                            ProgramCislo = 2,
-                            ProgramNazov = "Program2",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 34,
-                            CasVazenia = new DateTime(2023, 9, 12, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9136),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9140),
-                            ProgramCislo = 2,
-                            ProgramNazov = "Program2",
-                            UzivatelCislo = 2,
-                            UzivatelNazov = "Uzivatel2",
-                            Vaha = 90.0,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 35,
-                            CasVazenia = new DateTime(2023, 9, 15, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9145),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9148),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 85.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 36,
-                            CasVazenia = new DateTime(2023, 9, 16, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9153),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9156),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 2,
-                            UzivatelNazov = "Uzivatel2",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 37,
-                            CasVazenia = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9160),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9164),
-                            ProgramCislo = 2,
-                            ProgramNazov = "Program2",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 92.0,
-                            ZariadenieCislo = 2,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 38,
-                            CasVazenia = new DateTime(2023, 9, 13, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9168),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9171),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 91.0,
-                            ZariadenieCislo = 2,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 39,
-                            CasVazenia = new DateTime(2023, 9, 14, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9175),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9179),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 3,
-                            UzivatelNazov = "Uzivatel3",
-                            Vaha = 91.5,
-                            ZariadenieCislo = 2,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 40,
-                            CasVazenia = new DateTime(2023, 9, 10, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9183),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9187),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 3,
-                            ZariadenieId = 3
-                        },
-                        new
-                        {
-                            Id = 41,
-                            CasVazenia = new DateTime(2023, 9, 10, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9191),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9194),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 3,
-                            UzivatelNazov = "Uzivatel3",
-                            Vaha = 92.5,
-                            ZariadenieCislo = 3,
-                            ZariadenieId = 3
-                        });
                 });
 
             modelBuilder.Entity("WebVue.Models.ProgramVyroby", b =>

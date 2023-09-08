@@ -12,9 +12,8 @@ namespace WebVue.Models
 	{
 		public int Id { get; set; }
 		public int? Cislo { get; set; }
-		public string? Nazov { get; set; }
+		public string? Nazov { get; set; } = "";
 		public int? ZariadenieId { get; set; }
 		public Zariadenie? Zariadenie { get; set; }
-		public ICollection<Zaznam> Zaznamy { get; set; } = new Collection<Zaznam>();
 	}
 }

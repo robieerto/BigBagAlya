@@ -18,6 +18,7 @@ namespace ModbusProfinetDL
 		public const string dateTimeFormat = "HH:mm:ss dd-MM-yyyy";
 		public const string dateTimeFormatCsv = "HH:mm:ss_dd-MM-yyyy";
 
+		public static string filename = "data";
 		public static string lastTime;
 
 		private static string GetSavePath(DateTime now)
@@ -53,7 +54,7 @@ namespace ModbusProfinetDL
 			}
 		}
 
-		public static void SaveBigBagData(List<BigBagModel> data)
+		public static void SaveBigBagData<T>(List<T> data)
 		{
 			var currDateTime = DateTime.Now;
 			lastTime = currDateTime.ToString(dateTimeFormat);
@@ -63,7 +64,7 @@ namespace ModbusProfinetDL
 				Directory.CreateDirectory(savePath);
 			}
 
-			var filePath = $"{savePath}\\dataVaha.csv";
+			var filePath = $"{savePath}\\${filename}.csv";
 			SaveData(data, filePath);
 		}
 	}

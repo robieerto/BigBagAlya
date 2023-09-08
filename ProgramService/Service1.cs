@@ -29,9 +29,8 @@ namespace ProgramService
 			this.timer1.Elapsed += new System.Timers.ElapsedEventHandler(this.timer1_Tick);
 			timer1.Enabled = true;
 
-			var dataPath = AppDomain.CurrentDomain.BaseDirectory + "\\data";
-			Library.Initialize(dataPath);
-			Library.WriteLog("Sluzba bola spustena");
+			CsvLayer.filename = "dataVaha";
+			Library.Initialize(AppDomain.CurrentDomain.BaseDirectory + "\\data");
 
 			Task.Run(() => DataCommunication.ProfinetTask());
 		}

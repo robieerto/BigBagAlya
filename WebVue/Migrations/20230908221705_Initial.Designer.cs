@@ -10,8 +10,8 @@ using WebVue.DAL;
 namespace WebVue.Migrations
 {
     [DbContext(typeof(BigBagDbContext))]
-    [Migration("20230904211928_Migration1")]
-    partial class Migration1
+    [Migration("20230908221705_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,45 +41,7 @@ namespace WebVue.Migrations
 
                     b.HasIndex("ZariadenieId");
 
-                    b.ToTable("ProgramVyroby");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Cislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Cislo = 2,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Cislo = 3,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Cislo = 4,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Cislo = 5,
-                            ZariadenieId = 3
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Cislo = 6,
-                            ZariadenieId = 3
-                        });
+                    b.ToTable("Programy");
                 });
 
             modelBuilder.Entity("WebVue.Models.Uzivatel", b =>
@@ -89,7 +51,7 @@ namespace WebVue.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Cislo")
+                    b.Property<int?>("Cislo")
                         .HasColumnType("int");
 
                     b.Property<string>("Nazov")
@@ -102,45 +64,7 @@ namespace WebVue.Migrations
 
                     b.HasIndex("ZariadenieId");
 
-                    b.ToTable("Uzivatel");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Cislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Cislo = 2,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Cislo = 3,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Cislo = 4,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Cislo = 5,
-                            ZariadenieId = 3
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Cislo = 6,
-                            ZariadenieId = 3
-                        });
+                    b.ToTable("Uzivatelia");
                 });
 
             modelBuilder.Entity("WebVue.Models.Zariadenie", b =>
@@ -150,7 +74,7 @@ namespace WebVue.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Cislo")
+                    b.Property<int?>("Cislo")
                         .HasColumnType("int");
 
                     b.Property<string>("Nazov")
@@ -158,24 +82,7 @@ namespace WebVue.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Zariadenie");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Cislo = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Cislo = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Cislo = 3
-                        });
+                    b.ToTable("Zariadenia");
                 });
 
             modelBuilder.Entity("WebVue.Models.Zaznam", b =>
@@ -185,40 +92,43 @@ namespace WebVue.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Cas")
+                    b.Property<DateTime>("CasVazenia")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Den")
+                    b.Property<DateTime>("CasVycitania")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Den")
                         .HasColumnType("int");
 
-                    b.Property<int>("Hodiny")
+                    b.Property<int?>("Hodiny")
                         .HasColumnType("int");
 
-                    b.Property<int>("Mesiac")
+                    b.Property<int?>("Mesiac")
                         .HasColumnType("int");
 
-                    b.Property<int>("Minuty")
+                    b.Property<int?>("Minuty")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProgramCislo")
+                    b.Property<int?>("ProgramCislo")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProgramId")
+                    b.Property<string>("ProgramNazov")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Rok")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rok")
+                    b.Property<int?>("UzivatelCislo")
                         .HasColumnType("int");
 
-                    b.Property<int>("UzivatelCislo")
-                        .HasColumnType("int");
+                    b.Property<string>("UzivatelNazov")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UzivatelId")
-                        .HasColumnType("int");
+                    b.Property<double>("Vaha")
+                        .HasColumnType("float");
 
-                    b.Property<float>("Vaha")
-                        .HasColumnType("real");
-
-                    b.Property<int>("ZariadenieCislo")
+                    b.Property<int?>("ZariadenieCislo")
                         .HasColumnType("int");
 
                     b.Property<int?>("ZariadenieId")
@@ -226,13 +136,9 @@ namespace WebVue.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProgramId");
-
-                    b.HasIndex("UzivatelId");
-
                     b.HasIndex("ZariadenieId");
 
-                    b.ToTable("Zaznam");
+                    b.ToTable("Zaznamy");
                 });
 
             modelBuilder.Entity("WebVue.Models.ProgramVyroby", b =>
@@ -247,7 +153,7 @@ namespace WebVue.Migrations
             modelBuilder.Entity("WebVue.Models.Uzivatel", b =>
                 {
                     b.HasOne("WebVue.Models.Zariadenie", "Zariadenie")
-                        .WithMany()
+                        .WithMany("Uzivatelia")
                         .HasForeignKey("ZariadenieId");
 
                     b.Navigation("Zariadenie");
@@ -255,38 +161,18 @@ namespace WebVue.Migrations
 
             modelBuilder.Entity("WebVue.Models.Zaznam", b =>
                 {
-                    b.HasOne("WebVue.Models.ProgramVyroby", "Program")
-                        .WithMany("Zaznamy")
-                        .HasForeignKey("ProgramId");
-
-                    b.HasOne("WebVue.Models.Uzivatel", "Uzivatel")
-                        .WithMany("Zaznamy")
-                        .HasForeignKey("UzivatelId");
-
                     b.HasOne("WebVue.Models.Zariadenie", "Zariadenie")
                         .WithMany("Zaznamy")
                         .HasForeignKey("ZariadenieId");
 
-                    b.Navigation("Program");
-
-                    b.Navigation("Uzivatel");
-
                     b.Navigation("Zariadenie");
-                });
-
-            modelBuilder.Entity("WebVue.Models.ProgramVyroby", b =>
-                {
-                    b.Navigation("Zaznamy");
-                });
-
-            modelBuilder.Entity("WebVue.Models.Uzivatel", b =>
-                {
-                    b.Navigation("Zaznamy");
                 });
 
             modelBuilder.Entity("WebVue.Models.Zariadenie", b =>
                 {
                     b.Navigation("Programy");
+
+                    b.Navigation("Uzivatelia");
 
                     b.Navigation("Zaznamy");
                 });
