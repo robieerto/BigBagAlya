@@ -1,4 +1,4 @@
-# clientapp
+# app-name
 
 ## Project setup
 ```
