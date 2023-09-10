@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using ModbusProfinetDL;
 using WebVue.DAL;
 using WebVue.DAL.Repositories;
+using System.IO;
+using System.Reflection;
 
 namespace WebVue
 {
@@ -26,6 +28,7 @@ namespace WebVue
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
-				});
+				})
+			.UseContentRoot(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 	}
 }

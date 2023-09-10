@@ -1,6 +1,8 @@
 import 'devextreme/dist/css/dx.common.css';
 import './themes/generated/theme.base.css';
 import './themes/generated/theme.additional.css';
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
 import { createApp } from 'vue';
 import router from './router';
 import themes from 'devextreme/ui/themes';

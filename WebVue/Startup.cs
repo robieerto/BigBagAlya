@@ -30,7 +30,7 @@ namespace WebVue
 			services.AddControllers();
 			services.AddSpaStaticFiles(configuration =>
 			{
-				configuration.RootPath = "ClientApp";
+				configuration.RootPath = "ClientApp/dist";
 			});
 
 			services.AddDbContext<BigBagDbContext>

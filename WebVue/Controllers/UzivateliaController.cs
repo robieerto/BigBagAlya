@@ -12,12 +12,12 @@ namespace WebVue.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class ZaznamyController : Controller
+	public class UzivateliaController : Controller
 	{
-		private readonly ILogger<ZaznamyController> _logger;
+		private readonly ILogger<UzivateliaController> _logger;
 		private readonly BigBagDbContext _context;
 
-		public ZaznamyController(BigBagDbContext context, ILogger<ZaznamyController> logger)
+		public UzivateliaController(BigBagDbContext context, ILogger<UzivateliaController> logger)
 		{
 			_context = context;
 			_logger = logger;
@@ -26,19 +26,12 @@ namespace WebVue.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
-			var result = _context.Zaznamy.Select(e => new ZaznamVM
+			var result = _context.Uzivatelia.Select(e => new UzivatelVM
 			{
 				Id = e.Id,
+				Cislo = e.Cislo,
+				Nazov = e.Nazov,
 				ZariadenieId = e.ZariadenieId,
-				ZariadenieCislo = e.ZariadenieCislo,
-				ZariadenieNazov = e.Zariadenie.Nazov,
-				ProgramCislo = e.ProgramCislo,
-				ProgramNazov = e.ProgramNazov,
-				UzivatelCislo = e.UzivatelCislo,
-				UzivatelNazov = e.UzivatelNazov,
-				Vaha = e.Vaha,
-				CasVazenia = e.CasVazenia,
-				CasVycitania = e.CasVycitania
 			});
 
 			return Json(await DataSourceLoader.LoadAsync(result, loadOptions));

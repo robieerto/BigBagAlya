@@ -27,7 +27,7 @@ export default {
       if (item.path && !/^\//.test(item.path)) {
         item.path = `/${item.path}`;
       }
-      return { ...item, expanded: isLargeScreen };
+      return { ...item, expanded: false };
     });
 
     const treeViewRef = ref(null);

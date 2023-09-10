@@ -15,23 +15,15 @@
       :word-wrap-enabled="true"
       :remote-operations="true"
       :on-initialized="onDataGridInitialized"
+      :width="'40%'"
     >
       <dx-paging :page-size="10" />
       <dx-pager :show-page-size-selector="true" :show-info="true" />
       <dx-filter-row :visible="true" />
-      <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :alignment="'right'" cell-template="poradieTemplate" />
+      <!-- <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :alignment="'right'" cell-template="poradieTemplate" /> -->
       <dx-column data-field="id" caption="Id" :visible="false" />
-      <dx-column data-field="vaha" caption="Hmotnosť" :format="floatFormat" />
-      <dx-column data-field="casVazenia" caption="Čas váženia" data-type="date" :format="dateFormat" />
-      <dx-column data-field="zariadenieNazov" caption="Váha" :visible="!state.zariadenie" />
-      <dx-column data-field="programNazov" caption="Program" />
-      <!-- <dx-column data-field="programCislo" caption="Číslo programu" :width="130" /> -->
-      <dx-column data-field="uzivatelNazov" caption="Užívateľ" />
-      <!-- <dx-column data-field="uzivatelCislo" caption="Číslo užívateľa" :width="130" /> -->
-      <dx-column data-field="casVycitania" caption="Čas vyčítania dát" data-type="date" :format="dateFormat" />
-      <!-- <dx-column data-field="Task_Priority" caption="Priority">
-        <dx-lookup display-expr="name" value-expr="value" :data-source="priorities" />
-      </dx-column> -->
+      <dx-column data-field="cislo" caption="Číslo programu" :width="'auto'" />
+      <dx-column data-field="nazov" caption="Názov programu" />
       <template #poradieTemplate="{ data }">{{ calculatePoradie(data.row.rowIndex) }}</template>
     </dx-data-grid>
   </div>
@@ -47,21 +39,18 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 
-const floatFormat = '#0.0';
-const dateFormat = 'd.M.yyyy H:mm';
-
 const title = computed(() => {
   if (state.zariadenie) {
-    if (state.zariadenie > 0 && state.zariadenie <= 3) return `Váženia váhy ${state.zariadenie}`;
+    if (state.zariadenie > 0 && state.zariadenie <= 3) return `Programy váhy ${state.zariadenie}`;
     else return 'Žiadne údaje';
-  } else return 'Všetky váženia';
+  } else return 'Všetky programy';
 });
 
 const state = reactive({
   dataSource: new DataSource({
     store: createStore({
       key: 'id',
-      loadUrl: '/zaznamy',
+      loadUrl: '/programy',
       onBeforeSend: (_, settings) => {
         if (state.zariadenie) {
           const zariadenieFilter = ['zariadenieId', '=', state.zariadenie];

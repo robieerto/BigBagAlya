@@ -2,6 +2,8 @@ import auth from './auth';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 import data from './views/data-page';
+import programy from './views/programy-page';
+import uzivatelia from './views/uzivatelia-page';
 // import Profile from './views/profile-page';
 import defaultLayout from './layouts/side-nav-outer-toolbar';
 // import simpleLayout from './layouts/single-card';
@@ -20,6 +22,24 @@ const router = new createRouter({
         layout: defaultLayout,
       },
       component: data,
+    },
+    {
+      path: '/programy',
+      name: 'programy',
+      meta: {
+        requiresAuth: true,
+        layout: defaultLayout,
+      },
+      component: programy,
+    },
+    {
+      path: '/uzivatelia',
+      name: 'uzivatelia',
+      meta: {
+        requiresAuth: true,
+        layout: defaultLayout,
+      },
+      component: uzivatelia,
     },
     {
       path: '/',
