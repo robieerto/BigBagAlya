@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h2 class="content-block">{{ title }}</h2>
+    <div class="d-flex justify-content-between">
+      <h2 class="content-block">{{ title }}</h2>
+      <button type="button" class="btn btn-secondary h-100 m-3" @click="exportToPdf">Exportovať</button>
+    </div>
 
     <dx-data-grid
       class="dx-card wide-card"
@@ -15,13 +18,14 @@
       :word-wrap-enabled="true"
       :remote-operations="true"
       :on-initialized="onDataGridInitialized"
+      :on-content-ready="onContentReady"
     >
       <dx-paging :page-size="10" />
-      <dx-pager :show-page-size-selector="true" :show-info="true" />
+      <dx-pager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="[5, 10, 20, 50, 100]" />
       <dx-filter-row :visible="true" />
       <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :alignment="'right'" cell-template="poradieTemplate" />
       <dx-column data-field="id" caption="Id" :visible="false" />
-      <dx-column data-field="vaha" caption="Hmotnosť" :format="floatFormat" />
+      <dx-column data-field="vaha" caption="Hmotnosť (kg)" data-type="number" :format="floatFormat" />
       <dx-column data-field="casVazenia" caption="Čas váženia" data-type="date" :format="dateFormat" />
       <dx-column data-field="zariadenieNazov" caption="Váha" :visible="!state.zariadenie" />
       <dx-column data-field="programNazov" caption="Program" />
@@ -32,22 +36,51 @@
       <!-- <dx-column data-field="Task_Priority" caption="Priority">
         <dx-lookup display-expr="name" value-expr="value" :data-source="priorities" />
       </dx-column> -->
+      <DxSummary>
+        <DxTotalItem column="vaha" summary-type="sum" :value-format="bigFloatFormat" />
+      </DxSummary>
       <template #poradieTemplate="{ data }">{{ calculatePoradie(data.row.rowIndex) }}</template>
     </dx-data-grid>
+  </div>
+  <div>
+    <vue3-html2pdf
+      :show-layout="false"
+      :float-layout="true"
+      :enable-download="true"
+      :preview-modal="true"
+      :paginate-elements-by-height="1400"
+      filename="nightprogrammerpdf"
+      :pdf-quality="2"
+      :manual-pagination="false"
+      pdf-format="a4"
+      :pdf-margin="10"
+      pdf-orientation="landscape"
+      pdf-content-width="800px"
+      @progress="onProgress($event)"
+      ref="html2pdfRef"
+    >
+      <template v-slot:pdf-content>
+        <ReportPdf :title="title" :filter="state.combinedFilter" :sum="state.vahaSum" />
+      </template>
+    </vue3-html2pdf>
   </div>
 </template>
 
 <script setup>
 import 'devextreme/data/odata/store';
-import DxDataGrid, { DxColumn, DxFilterRow, DxPager, DxPaging } from 'devextreme-vue/data-grid';
+import DxDataGrid, { DxColumn, DxFilterRow, DxPager, DxPaging, DxTotalItem, DxSummary } from 'devextreme-vue/data-grid';
 import DataSource from 'devextreme/data/data_source';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+
+import Vue3Html2pdf from 'vue3-html2pdf';
+import ReportPdf from './report-pdf';
 
 const route = useRoute();
 
-const floatFormat = '#0.0';
+const floatFormat = '#,##0.00';
+const bigFloatFormat = '#,##0.00';
 const dateFormat = 'd.M.yyyy H:mm';
 
 const title = computed(() => {
@@ -56,6 +89,8 @@ const title = computed(() => {
     else return 'Žiadne údaje';
   } else return 'Všetky váženia';
 });
+
+const html2pdfRef = ref();
 
 const state = reactive({
   dataSource: new DataSource({
@@ -73,6 +108,8 @@ const state = reactive({
   }),
   dataGridInstance: null,
   zariadenie: route.query.vaha,
+  vahaSum: 0,
+  combinedFilter: [],
 });
 
 watch(
@@ -85,6 +122,19 @@ watch(
 
 function onDataGridInitialized(e) {
   state.dataGridInstance = e.component;
+}
+
+function onContentReady() {
+  state.vahaSum = state.dataGridInstance?.getTotalSummaryValue('vaha');
+  state.combinedFilter = state.dataGridInstance?.getCombinedFilter();
+}
+
+function exportToPdf() {
+  try {
+    html2pdfRef.value.generatePdf();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 const calculatePoradie = (rowIndex) => rowIndex + state.dataGridInstance.pageIndex() * state.dataGridInstance.pageSize();

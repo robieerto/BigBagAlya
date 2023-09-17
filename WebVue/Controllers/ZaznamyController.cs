@@ -26,6 +26,15 @@ namespace WebVue.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
 		{
+			if (loadOptions.Sort == null)
+			{
+				var sortinfo = new DevExtreme.AspNet.Data.SortingInfo[]
+				{
+					new SortingInfo() {Desc = true, Selector = "id"},
+				};
+				loadOptions.Sort = sortinfo;
+			}
+
 			var result = _context.Zaznamy.Select(e => new ZaznamVM
 			{
 				Id = e.Id,
@@ -39,7 +48,7 @@ namespace WebVue.Controllers
 				Vaha = e.Vaha,
 				CasVazenia = e.CasVazenia,
 				CasVycitania = e.CasVycitania
-			});
+			}).OrderByDescending(e => e.Id);
 
 			return Json(await DataSourceLoader.LoadAsync(result, loadOptions));
 		}

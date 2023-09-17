@@ -14,8 +14,8 @@ namespace WebVue
 	public static class DataCommunication
 	{
 		static DbContextOptionsBuilder<BigBagDbContext> optionsBuilder;
-		static List<ProfinetS7> connections = new List<ProfinetS7>();
 		static List<BigBagModel> dataProfinet;
+		public static List<ProfinetS7> connections = new List<ProfinetS7>();
 
 		public static bool Initialization()
 		{
@@ -84,14 +84,14 @@ namespace WebVue
 					{
 						try
 						{
-							var data = connection.ReadData();
+							var data = connection.ReadData(2694, 2);
 							if (data != null)
 							{
 								dataProfinet.AddRange(data);
 							}
 
 							var programy = connection.ReadArray(10, 6, "4.0");
-							var uzivatelia = connection.ReadArray(10, 358, "4.1");
+							var uzivatelia = connection.ReadArray(30, 710, "4.1");
 
 							if (programy != null)
 							{
@@ -160,7 +160,7 @@ namespace WebVue
 						await dbContext.SaveChangesAsync();
 					}
 
-					await Task.Delay(5000);
+					await Task.Delay(1000);
 				}
 			}
 			catch (Exception ex)

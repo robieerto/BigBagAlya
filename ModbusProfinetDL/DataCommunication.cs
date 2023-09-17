@@ -24,7 +24,7 @@ namespace ModbusProfinetDL
 				{
 					try
 					{
-						dataProfinet = profinet.ReadData();
+						dataProfinet = profinet.ReadData(2694, 2);
 						if (dataProfinet != null)
 						{
 							CsvLayer.SaveBigBagData(dataProfinet);

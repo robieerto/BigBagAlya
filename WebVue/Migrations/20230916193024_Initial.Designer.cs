@@ -10,8 +10,8 @@ using WebVue.DAL;
 namespace WebVue.Migrations
 {
     [DbContext(typeof(BigBagDbContext))]
-    [Migration("20230908221759_SeedTestData")]
-    partial class SeedTestData
+    [Migration("20230916193024_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -352,140 +352,560 @@ namespace WebVue.Migrations
                         new
                         {
                             Id = 11,
-                            Cislo = 0,
+                            Cislo = 10,
                             Nazov = "",
-                            ZariadenieId = 2
+                            ZariadenieId = 1
                         },
                         new
                         {
                             Id = 12,
+                            Cislo = 11,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Cislo = 12,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Cislo = 13,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Cislo = 14,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Cislo = 15,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Cislo = 16,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Cislo = 17,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Cislo = 18,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Cislo = 19,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Cislo = 20,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Cislo = 21,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Cislo = 22,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Cislo = 23,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Cislo = 24,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Cislo = 25,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Cislo = 26,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Cislo = 27,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Cislo = 28,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Cislo = 29,
+                            Nazov = "",
+                            ZariadenieId = 1
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Cislo = 0,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 32,
                             Cislo = 1,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 13,
+                            Id = 33,
                             Cislo = 2,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 14,
+                            Id = 34,
                             Cislo = 3,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 15,
+                            Id = 35,
                             Cislo = 4,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 16,
+                            Id = 36,
                             Cislo = 5,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 17,
+                            Id = 37,
                             Cislo = 6,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 18,
+                            Id = 38,
                             Cislo = 7,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 19,
+                            Id = 39,
                             Cislo = 8,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 20,
+                            Id = 40,
                             Cislo = 9,
                             Nazov = "",
                             ZariadenieId = 2
                         },
                         new
                         {
-                            Id = 21,
+                            Id = 41,
+                            Cislo = 10,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Cislo = 11,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Cislo = 12,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Cislo = 13,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Cislo = 14,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Cislo = 15,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Cislo = 16,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Cislo = 17,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Cislo = 18,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Cislo = 19,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Cislo = 20,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Cislo = 21,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Cislo = 22,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Cislo = 23,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Cislo = 24,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Cislo = 25,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Cislo = 26,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Cislo = 27,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Cislo = 28,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Cislo = 29,
+                            Nazov = "",
+                            ZariadenieId = 2
+                        },
+                        new
+                        {
+                            Id = 61,
                             Cislo = 0,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 22,
+                            Id = 62,
                             Cislo = 1,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 23,
+                            Id = 63,
                             Cislo = 2,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 24,
+                            Id = 64,
                             Cislo = 3,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 25,
+                            Id = 65,
                             Cislo = 4,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 26,
+                            Id = 66,
                             Cislo = 5,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 27,
+                            Id = 67,
                             Cislo = 6,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 28,
+                            Id = 68,
                             Cislo = 7,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 29,
+                            Id = 69,
                             Cislo = 8,
                             Nazov = "",
                             ZariadenieId = 3
                         },
                         new
                         {
-                            Id = 30,
+                            Id = 70,
                             Cislo = 9,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Cislo = 10,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Cislo = 11,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Cislo = 12,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Cislo = 13,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Cislo = 14,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Cislo = 15,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Cislo = 16,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Cislo = 17,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Cislo = 18,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Cislo = 19,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Cislo = 20,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Cislo = 21,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Cislo = 22,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Cislo = 23,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Cislo = 24,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Cislo = 25,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Cislo = 26,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Cislo = 27,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 89,
+                            Cislo = 28,
+                            Nazov = "",
+                            ZariadenieId = 3
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Cislo = 29,
                             Nazov = "",
                             ZariadenieId = 3
                         });
@@ -583,151 +1003,6 @@ namespace WebVue.Migrations
                     b.HasIndex("ZariadenieId");
 
                     b.ToTable("Zaznamy");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 31,
-                            CasVazenia = new DateTime(2023, 9, 9, 0, 17, 58, 810, DateTimeKind.Local).AddTicks(5230),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(8556),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 32,
-                            CasVazenia = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9092),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9109),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 91.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 33,
-                            CasVazenia = new DateTime(2023, 9, 11, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9115),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9131),
-                            ProgramCislo = 2,
-                            ProgramNazov = "Program2",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 34,
-                            CasVazenia = new DateTime(2023, 9, 12, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9136),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9140),
-                            ProgramCislo = 2,
-                            ProgramNazov = "Program2",
-                            UzivatelCislo = 2,
-                            UzivatelNazov = "Uzivatel2",
-                            Vaha = 90.0,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 35,
-                            CasVazenia = new DateTime(2023, 9, 15, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9145),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9148),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 85.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 36,
-                            CasVazenia = new DateTime(2023, 9, 16, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9153),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9156),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 2,
-                            UzivatelNazov = "Uzivatel2",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 1,
-                            ZariadenieId = 1
-                        },
-                        new
-                        {
-                            Id = 37,
-                            CasVazenia = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9160),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9164),
-                            ProgramCislo = 2,
-                            ProgramNazov = "Program2",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 92.0,
-                            ZariadenieCislo = 2,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 38,
-                            CasVazenia = new DateTime(2023, 9, 13, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9168),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9171),
-                            ProgramCislo = 1,
-                            ProgramNazov = "Program1",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 91.0,
-                            ZariadenieCislo = 2,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 39,
-                            CasVazenia = new DateTime(2023, 9, 14, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9175),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9179),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 3,
-                            UzivatelNazov = "Uzivatel3",
-                            Vaha = 91.5,
-                            ZariadenieCislo = 2,
-                            ZariadenieId = 2
-                        },
-                        new
-                        {
-                            Id = 40,
-                            CasVazenia = new DateTime(2023, 9, 10, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9183),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9187),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 1,
-                            UzivatelNazov = "Uzivatel1",
-                            Vaha = 90.5,
-                            ZariadenieCislo = 3,
-                            ZariadenieId = 3
-                        },
-                        new
-                        {
-                            Id = 41,
-                            CasVazenia = new DateTime(2023, 9, 10, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9191),
-                            CasVycitania = new DateTime(2023, 9, 9, 0, 17, 58, 813, DateTimeKind.Local).AddTicks(9194),
-                            ProgramCislo = 3,
-                            ProgramNazov = "Program3",
-                            UzivatelCislo = 3,
-                            UzivatelNazov = "Uzivatel3",
-                            Vaha = 92.5,
-                            ZariadenieCislo = 3,
-                            ZariadenieId = 3
-                        });
                 });
 
             modelBuilder.Entity("WebVue.Models.ProgramVyroby", b =>

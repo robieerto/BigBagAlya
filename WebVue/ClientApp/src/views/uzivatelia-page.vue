@@ -17,7 +17,7 @@
       :on-initialized="onDataGridInitialized"
       :width="'40%'"
     >
-      <dx-paging :page-size="10" />
+      <dx-paging :page-size="30" />
       <dx-pager :show-page-size-selector="true" :show-info="true" />
       <dx-filter-row :visible="true" />
       <!-- <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :alignment="'right'" cell-template="poradieTemplate" /> -->

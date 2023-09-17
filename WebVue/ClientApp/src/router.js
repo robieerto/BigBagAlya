@@ -7,6 +7,7 @@ import uzivatelia from './views/uzivatelia-page';
 // import Profile from './views/profile-page';
 import defaultLayout from './layouts/side-nav-outer-toolbar';
 // import simpleLayout from './layouts/single-card';
+import reportPdf from './views/report-pdf'
 
 // function loadView(view) {
 //   return () => import(/* webpackChunkName: "login" */ `./views/${view}.vue`);
@@ -48,6 +49,15 @@ const router = new createRouter({
     {
       path: '/:pathMatch(.*)*',
       redirect: '/data',
+    },
+    {
+      path: '/report',
+      name: 'report',
+      meta: {
+        requiresAuth: true,
+        layout: defaultLayout,
+      },
+      component: reportPdf,
     },
     // {
     //   path: '/profile',

@@ -17,6 +17,7 @@ namespace ModbusProfinetDL
 
 		public int zariadenie;
 		public bool isConnected = true;
+		public float vaha = -1;
 
 		public ProfinetS7(string ipAddr, int port, int zariadenie)
 		{
@@ -49,23 +50,26 @@ namespace ModbusProfinetDL
 			return isConnected;
 		}
 
-		public List<BigBagModel> ReadData()
+		public List<BigBagModel> ReadData(int startDbw, int countDbw)
 		{
 			try
 			{
 				if (CheckConnection() == false)
 				{
+					vaha = -1;
 					return null;
 				}
 
-				int bufferCount = (ushort)_plc.Read($"DB{_db}.DBW2");
+				vaha = (uint)_plc.Read($"MD508") / 10.0f;
+
+				int bufferCount = (ushort)_plc.Read($"DB{_db}.DBW{countDbw}");
 				if (bufferCount < 1)
 				{
 					return null;
 				}
 
 				var data = new List<BigBagModel>();
-				var dbw = 5638;
+				var dbw = startDbw;
 				for (var i = 0; i < bufferCount; i++)
 				{
 					data.Add(new BigBagModel()
