@@ -93,7 +93,7 @@ namespace WebVue
 							var programy = connection.ReadArray(10, 6, "4.0");
 							var uzivatelia = connection.ReadArray(30, 710, "4.1");
 
-							if (programy != null)
+							if (programy != null || uzivatelia != null)
 							{
 								using var dbContext = new BigBagDbContext(optionsBuilder.Options);
 								if (programy != null)
@@ -129,20 +129,33 @@ namespace WebVue
 					if (dataProfinet.Count > 0)
 					{
 						var zaznamy = dataProfinet
-							.Select(e => new Zaznam()
+							.Select(e =>
 							{
-								ZariadenieId = e.Zariadenie,
-								ZariadenieCislo = e.Zariadenie - 1,
-								ProgramCislo = e.Program,
-								UzivatelCislo = e.Uzivatel,
-								Vaha = e.Vaha,
-								CasVycitania = e.Cas,
-								CasVazenia = new DateTime(e.Rok, e.Mesiac, e.Den, e.Hodiny, e.Minuty, 0),
-								Rok = e.Rok,
-								Mesiac = e.Mesiac,
-								Den = e.Den,
-								Hodiny = e.Hodiny,
-								Minuty = e.Minuty
+								DateTime casVazenia;
+								try
+								{
+									casVazenia = new DateTime(e.Rok, e.Mesiac, e.Den, e.Hodiny, e.Minuty, 0);
+								}
+								catch (Exception)
+								{
+									casVazenia = new DateTime();
+								}
+
+								return new Zaznam()
+								{
+									ZariadenieId = e.Zariadenie,
+									ZariadenieCislo = e.Zariadenie - 1,
+									ProgramCislo = e.Program,
+									UzivatelCislo = e.Uzivatel,
+									Vaha = e.Vaha,
+									CasVycitania = e.Cas,
+									CasVazenia = casVazenia,
+									Rok = e.Rok,
+									Mesiac = e.Mesiac,
+									Den = e.Den,
+									Hodiny = e.Hodiny,
+									Minuty = e.Minuty
+								};
 							})
 							.ToList();
 
@@ -158,6 +171,11 @@ namespace WebVue
 						});
 						await dbContext.Zaznamy.AddRangeAsync(zaznamy);
 						await dbContext.SaveChangesAsync();
+
+						foreach (var connection in connections)
+						{
+							connection.SetBitDataWereRead();
+						}
 					}
 
 					await Task.Delay(1000);

@@ -10,7 +10,7 @@ namespace WebVue.ViewModels
 	public class AktualneDataVM
 	{
 		public int Zariadenie { get; set; }
-		public double Vaha { get; set; }
+		public float? Vaha { get; set; }
 
 	}
 }

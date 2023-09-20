@@ -55,12 +55,12 @@
       pdf-format="a4"
       :pdf-margin="10"
       pdf-orientation="landscape"
-      pdf-content-width="800px"
+      pdf-content-width="1100px"
       @progress="onProgress($event)"
       ref="html2pdfRef"
     >
       <template v-slot:pdf-content>
-        <ReportPdf :title="title" :filter="state.combinedFilter" :sum="state.vahaSum" />
+        <ReportPdf :title="vaha" :filter="state.combinedFilter" :sum="state.vahaSum" />
       </template>
     </vue3-html2pdf>
   </div>
@@ -88,6 +88,13 @@ const title = computed(() => {
     if (state.zariadenie > 0 && state.zariadenie <= 3) return `Váženia váhy ${state.zariadenie}`;
     else return 'Žiadne údaje';
   } else return 'Všetky váženia';
+});
+
+const vaha = computed(() => {
+  if (state.zariadenie) {
+    if (state.zariadenie > 0 && state.zariadenie <= 3) return `Váha ${state.zariadenie}`;
+    else return 'Žiadne údaje';
+  } else return 'Všetky váhy';
 });
 
 const html2pdfRef = ref();

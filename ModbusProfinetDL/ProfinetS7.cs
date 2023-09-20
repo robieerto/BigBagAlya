@@ -17,7 +17,7 @@ namespace ModbusProfinetDL
 
 		public int zariadenie;
 		public bool isConnected = true;
-		public float vaha = -1;
+		public float? vaha = null;
 
 		public ProfinetS7(string ipAddr, int port, int zariadenie)
 		{
@@ -56,11 +56,15 @@ namespace ModbusProfinetDL
 			{
 				if (CheckConnection() == false)
 				{
-					vaha = -1;
+					vaha = null;
 					return null;
 				}
 
 				vaha = (uint)_plc.Read($"MD508") / 10.0f;
+				if (vaha > 10000)
+				{
+					vaha = 0;
+				}
 
 				int bufferCount = (ushort)_plc.Read($"DB{_db}.DBW{countDbw}");
 				if (bufferCount < 1)
@@ -89,14 +93,29 @@ namespace ModbusProfinetDL
 					dbw += 16;
 				}
 
-				_plc.Write($"DB{_db}.DBX0.0", true);
-
 				return data;
 			}
 			catch (Exception ex)
 			{
 				Library.WriteLog(ex);
 				return null;
+			}
+		}
+
+		public void SetBitDataWereRead()
+		{
+			try
+			{
+				if (CheckConnection() == false)
+				{
+					return;
+				}
+				_plc.Write($"DB{_db}.DBX0.0", true);
+			}
+			catch (Exception ex)
+			{
+				Library.WriteLog(ex);
+				return;
 			}
 		}
 

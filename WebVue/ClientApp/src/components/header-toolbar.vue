@@ -75,35 +75,41 @@ const router = useRouter();
 const route = useRoute();
 
 const state = reactive({
-  vahyData: [null, null, null],
+  vahyData: [undefined, undefined, undefined],
 });
+
+const fetchAktualneData = () =>
+  fetch('/aktualneData')
+    .then((response) => response.json())
+    .then((data) => {
+      if (data && data.length) {
+        state.vahyData.fill(null);
+        data.forEach((element) => {
+          console.log(element.vaha);
+          state.vahyData[element.zariadenie - 1] = element.vaha.toFixed(1);
+        });
+      }
+    });
+
+fetchAktualneData();
 
 setInterval(() => {
   try {
-    fetch('/aktualneData')
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && data.length) {
-          state.vahyData.fill(-1);
-          data.forEach((element) => {
-            state.vahyData[element.zariadenie - 1] = element.vaha.toFixed(1);
-          });
-        }
-      });
+    fetchAktualneData();
   } catch (error) {
     console.log(error);
   }
 }, 2000);
 
 const calculateVahaText = (vaha) => {
-  if (vaha === null) return 'Načítavanie';
-  else if (vaha < 0) return 'Nepripojená';
+  if (vaha === undefined) return 'Načítavanie';
+  else if (vaha === null) return 'Nepripojená';
   else return vaha;
 };
 
 const calculateVahaClass = (vaha) => {
-  if (vaha === null) return 'bg-secondary';
-  else if (vaha < 0) return 'bg-danger';
+  if (vaha === undefined) return 'bg-secondary';
+  else if (vaha === null) return 'bg-danger';
   else return 'bg-success';
 };
 
