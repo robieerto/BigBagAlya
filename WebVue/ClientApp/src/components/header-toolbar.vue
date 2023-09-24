@@ -13,14 +13,27 @@
 
       <dx-item location="center" css-class="header-title dx-toolbar-label">
         <template #default>
-          <div class="col h4 mb-0 mx-5">
-            <span class="align-middle">Váha 1: </span>
-            <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[0])]">{{ calculateVahaText(state?.vahyData[0]) }}</span>
+          <div v-if="state.showData" class="d-flex justify-content-between">
+            <div class="col h4 mb-0 mx-5">
+              <span class="align-middle">Váha 1: </span>
+              <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[0])]">{{ calculateVahaText(state?.vahyData[0]) }}</span>
+            </div>
+            <div class="col h4 mb-0 mx-5">
+              <span class="align-middle">Váha 2: </span>
+              <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[1])]">{{ calculateVahaText(state?.vahyData[1]) }}</span>
+            </div>
+            <div class="col h4 mb-0 mx-5">
+              <span class="align-middle">Váha 3: </span>
+              <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[2])]">{{ calculateVahaText(state?.vahyData[2]) }}</span>
+            </div>
+          </div>
+          <div v-if="!state.showData" class="col h4 mb-0 mx-5">
+            <span :class="['badge ms-1', 'bg-danger']">Server je nedostupný</span>
           </div>
         </template>
       </dx-item>
 
-      <dx-item location="center" css-class="header-title dx-toolbar-label">
+      <!-- <dx-item v-if="state.showData" location="center" css-class="header-title dx-toolbar-label">
         <template #default>
           <div class="col h4 mb-0 mx-5">
             <span class="align-middle">Váha 2: </span>
@@ -29,14 +42,14 @@
         </template>
       </dx-item>
 
-      <dx-item location="center" css-class="header-title dx-toolbar-label">
+      <dx-item v-if="state.showData" location="center" css-class="header-title dx-toolbar-label">
         <template #default>
           <div class="col h4 mb-0 mx-5">
             <span class="align-middle">Váha 3: </span>
             <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[2])]">{{ calculateVahaText(state?.vahyData[2]) }}</span>
           </div>
         </template>
-      </dx-item>
+      </dx-item> -->
 
       <!-- <dx-item location="after" locate-in-menu="auto" menu-item-template="menuUserItem">
         <template #default>
@@ -76,20 +89,28 @@ const route = useRoute();
 
 const state = reactive({
   vahyData: [undefined, undefined, undefined],
+  showData: true,
 });
 
-const fetchAktualneData = () =>
-  fetch('/aktualneData')
-    .then((response) => response.json())
-    .then((data) => {
-      if (data && data.length) {
-        state.vahyData.fill(null);
-        data.forEach((element) => {
-          console.log(element.vaha);
-          state.vahyData[element.zariadenie - 1] = element.vaha.toFixed(1);
-        });
-      }
-    });
+const fetchAktualneData = async () => {
+  try {
+    await fetch('/aktualneData')
+      .then((response) => response.json())
+      .then((data) => {
+        state.showData = true;
+        if (data && data.length) {
+          state.vahyData.fill(null);
+          data.forEach((element) => {
+            if (element.vaha !== null) {
+              state.vahyData[element.zariadenie - 1] = element.vaha.toFixed(1);
+            }
+          });
+        }
+      });
+  } catch (e) {
+    state.showData = false;
+  }
+};
 
 fetchAktualneData();
 

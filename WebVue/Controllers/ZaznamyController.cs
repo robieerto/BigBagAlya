@@ -52,5 +52,20 @@ namespace WebVue.Controllers
 
 			return Json(await DataSourceLoader.LoadAsync(result, loadOptions));
 		}
+
+		[HttpDelete]
+		public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null)
+			{
+				return Ok();
+			}
+
+			var zaznam = _context.Zaznamy.Find(id);
+			_context.Zaznamy.Remove(zaznam);
+			await _context.SaveChangesAsync();
+
+			return Ok();
+		}
 	}
 }

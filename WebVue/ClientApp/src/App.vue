@@ -45,6 +45,7 @@ export default {
 
     onMounted(() => {
       subscribe(screenSizeChanged);
+      document.title = 'Alya Big-Bag';
     });
 
     onBeforeUnmount(() => {

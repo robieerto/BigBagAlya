@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="d-flex justify-content-between">
-      <h2 class="content-block">{{ title }}</h2>
+      <div class="d-flex justify-content-start">
+        <h2 class="content-block">{{ title }}</h2>
+        <button type="button" class="btn btn-primary h-50 m-3" @click="reloadData">Získať aktuálne dáta</button>
+      </div>
       <button type="button" class="btn btn-secondary h-100 m-3" @click="exportToPdf">Exportovať</button>
     </div>
 
@@ -19,10 +22,12 @@
       :remote-operations="true"
       :on-initialized="onDataGridInitialized"
       :on-content-ready="onContentReady"
+      :on-row-removing="onRowRemoving"
     >
       <dx-paging :page-size="10" />
       <dx-pager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="[5, 10, 20, 50, 100]" />
       <dx-filter-row :visible="true" />
+      <dx-editing :allow-adding="false" :allow-updating="false" :allow-deleting="true" :confirm-delete="true" />
       <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :alignment="'right'" cell-template="poradieTemplate" />
       <dx-column data-field="id" caption="Id" :visible="false" />
       <dx-column data-field="vaha" caption="Hmotnosť (kg)" data-type="number" :format="floatFormat" />
@@ -56,7 +61,6 @@
       :pdf-margin="10"
       pdf-orientation="landscape"
       pdf-content-width="1100px"
-      @progress="onProgress($event)"
       ref="html2pdfRef"
     >
       <template v-slot:pdf-content>
@@ -68,7 +72,7 @@
 
 <script setup>
 import 'devextreme/data/odata/store';
-import DxDataGrid, { DxColumn, DxFilterRow, DxPager, DxPaging, DxTotalItem, DxSummary } from 'devextreme-vue/data-grid';
+import DxDataGrid, { DxColumn, DxFilterRow, DxPager, DxPaging, DxTotalItem, DxSummary, DxEditing } from 'devextreme-vue/data-grid';
 import DataSource from 'devextreme/data/data_source';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { computed, reactive, ref, watch } from 'vue';
@@ -104,11 +108,16 @@ const state = reactive({
     store: createStore({
       key: 'id',
       loadUrl: '/zaznamy',
-      onBeforeSend: (_, settings) => {
+      deleteUrl: '/zaznamy',
+      onBeforeSend: (operation, settings) => {
         if (state.zariadenie) {
           const zariadenieFilter = ['zariadenieId', '=', state.zariadenie];
           const arrayFilter = settings.data.filter ? [JSON.parse(settings.data.filter), 'and', zariadenieFilter] : zariadenieFilter;
           settings.data.filter = JSON.stringify(arrayFilter);
+        }
+        if (operation === 'delete') {
+          settings.data = '';
+          settings.url += `?id=${state.actualRowId}`;
         }
       },
     }),
@@ -117,6 +126,7 @@ const state = reactive({
   zariadenie: route.query.vaha,
   vahaSum: 0,
   combinedFilter: [],
+  actualRowId: null,
 });
 
 watch(
@@ -142,6 +152,14 @@ function exportToPdf() {
   } catch (e) {
     console.log(e);
   }
+}
+
+function reloadData() {
+  state.dataSource.reload();
+}
+
+function onRowRemoving(e) {
+  state.actualRowId = e.key;
 }
 
 const calculatePoradie = (rowIndex) => rowIndex + state.dataGridInstance.pageIndex() * state.dataGridInstance.pageSize();

@@ -105,22 +105,25 @@ watch(
     state.vaha = props.title;
     state.program = 'Všetky programy';
     state.uzivatel = 'Všetci užívatelia';
+    console.log(filter);
     if (filter?.length) {
       filter.forEach((e) => {
         if (e && Array.isArray(e)) {
           const firstItem = e[0];
           const secondItem = e[1];
           const thirdItem = e[2];
-          console.log(e);
           if (e.columnIndex == 3 || firstItem == 'casVazenia') {
             if (e.columnIndex) {
               if (e.selectedFilterOperation == 'between') {
                 state.obdobieOd = toDate(e.filterValue[0]);
                 state.obdobieDo = toDate(e.filterValue[1]);
               } else if (e.selectedFilterOperation == '>' || e.selectedFilterOperation == '>=') {
-                state.obdobieOd = toDate(e.filterValue);
+                state.obdobieOd = toDate(e[2]);
               } else if (e.selectedFilterOperation == '<' || e.selectedFilterOperation == '<=') {
-                state.obdobieDo = toDate(e.filterValue);
+                state.obdobieDo = toDate(e[2]);
+                let date = new Date(e[2]);
+                date.setDate(date.getDate() - 1);
+                state.obdobieDo = toDate(date);
               } else if (e.selectedFilterOperation == '=') {
                 state.obdobieOd = toDate(e.filterValue);
                 state.obdobieDo = toDate(e.filterValue);
@@ -141,6 +144,15 @@ watch(
             state.program = e.filterValue;
           } else if (e.columnIndex == 6) {
             state.uzivatel = e.filterValue;
+          }
+        } else if (e == 'casVazenia') {
+          if (filter[1] == '>' || filter[1] == '>=') {
+            state.obdobieOd = toDate(filter[2]);
+          } else if (filter[1] == '<' || filter[1] == '<=') {
+            state.obdobieDo = toDate(filter[2]);
+            let date = new Date(filter[2]);
+            date.setDate(date.getDate() - 1);
+            state.obdobieDo = toDate(date);
           }
         } else if (e == 'zariadenieNazov') {
           state.vaha = filter[2];
