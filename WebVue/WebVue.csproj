@@ -63,6 +63,8 @@
 
   <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
     <Copy SourceFiles="scale_icon.ico" DestinationFolder="$(PublishDir)" />
+    <Copy SourceFiles="installer.bat" DestinationFolder="$(PublishDir)" />
+    <Copy SourceFiles="run.bat" DestinationFolder="$(PublishDir)" />
   </Target>
 
 
