@@ -60,11 +60,7 @@ namespace ModbusProfinetDL
 					return null;
 				}
 
-				vaha = (uint)_plc.Read($"MD508") / 10.0f;
-				if (vaha > 10000)
-				{
-					vaha = 0;
-				}
+				vaha = (int)(uint)_plc.Read($"MD508") / 10.0f;
 
 				int bufferCount = (ushort)_plc.Read($"DB{_db}.DBW{countDbw}");
 				if (bufferCount < 1)
@@ -141,7 +137,7 @@ namespace ModbusProfinetDL
 				for (var i = 0; i < count; i++)
 				{
 					var zaznam = (string)_plc.Read(DataType.DataBlock, 5, dbw, VarType.String, length);
-					zaznam = Regex.Replace(zaznam, @"\p{C}+", string.Empty); // delete non-printable chars
+					zaznam = Regex.Replace(zaznam, @"\p{C}+", string.Empty).TrimEnd(); // delete non-printable chars
 					zaznamy.Add(zaznam);
 					dbw += length + 2;
 				}
