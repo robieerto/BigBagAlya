@@ -61,5 +61,9 @@
     </ItemGroup>
   </Target>
 
+  <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
+    <Copy SourceFiles="scale_icon.ico" DestinationFolder="$(PublishDir)" />
+  </Target>
+
 
 </Project>

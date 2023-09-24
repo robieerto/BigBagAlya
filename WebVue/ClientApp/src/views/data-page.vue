@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between">
       <div class="d-flex justify-content-start">
         <h2 class="content-block">{{ title }}</h2>
-        <button type="button" class="btn btn-primary h-50 m-3" @click="reloadData">Získať aktuálne dáta</button>
+        <button type="button" class="btn btn-primary h-50 m-3" @click="reloadData">Obnoviť</button>
       </div>
       <button type="button" class="btn btn-secondary h-100 m-3" @click="exportToPdf">Exportovať</button>
     </div>
