@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using ModbusProfinetDL.Models;
 using S7.Net;
 
@@ -25,15 +27,18 @@ namespace ModbusProfinetDL
 			_ipAddr = ipAddr;
 			_port = port;
 			_plc = new Plc(CpuType.S71200, ipAddr, port, _rack, _slot);
-		}
+			_plc.ReadTimeout = 1000;
+			_plc.WriteTimeout = 1000;
+        }
 
-		public bool CheckConnection()
+		public async Task<bool> CheckConnection()
 		{
 			if (_plc.IsConnected == false)
 			{
 				try
 				{
-					_plc.Open();
+                    var ct = new CancellationTokenSource(1000).Token;
+                    await _plc.OpenAsync(ct);
 					Library.WriteLog("Profinet pripojeny");
 					isConnected = true;
 				}
@@ -50,19 +55,21 @@ namespace ModbusProfinetDL
 			return isConnected;
 		}
 
-		public List<BigBagModel> ReadData(int startDbw, int countDbw)
+		public async Task<List<BigBagModel>> ReadData(int startDbw, int countDbw)
 		{
 			try
 			{
-				if (CheckConnection() == false)
+				if (await CheckConnection() == false)
 				{
 					vaha = null;
 					return null;
 				}
 
-				vaha = (int)(uint)_plc.Read($"MD508") / 10.0f;
+                var ct = new CancellationTokenSource(1000).Token;
 
-				int bufferCount = (ushort)_plc.Read($"DB{_db}.DBW{countDbw}");
+                vaha = (int)(uint) await _plc.ReadAsync($"MD508", ct) / 10.0f;
+
+				int bufferCount = (ushort) await _plc.ReadAsync($"DB{_db}.DBW{countDbw}", ct);
 				if (bufferCount < 1)
 				{
 					return null;
@@ -98,11 +105,11 @@ namespace ModbusProfinetDL
 			}
 		}
 
-		public void SetBitDataWereRead()
+		public async Task SetBitDataWereRead()
 		{
 			try
 			{
-				if (CheckConnection() == false)
+				if (await CheckConnection() == false)
 				{
 					return;
 				}
@@ -115,16 +122,18 @@ namespace ModbusProfinetDL
 			}
 		}
 
-		public List<string> ReadArray(int count, int startDbw, string zmenaDbx)
+		public async Task<List<string>> ReadArray(int count, int startDbw, string zmenaDbx)
 		{
 			try
 			{
-				if (CheckConnection() == false)
+				if (await CheckConnection() == false)
 				{
 					return null;
 				}
 
-				bool zmena = (bool)_plc.Read($"DB{_db}.DBX{zmenaDbx}");
+                var ct = new CancellationTokenSource(1000).Token;
+
+                bool zmena = (bool)await _plc.ReadAsync($"DB{_db}.DBX{zmenaDbx}", ct);
 				if (zmena == false)
 				{
 					return null;
@@ -132,11 +141,11 @@ namespace ModbusProfinetDL
 
 				var zaznamy = new List<string>();
 				var dbw = startDbw;
-				var length = (byte)_plc.Read(DataType.DataBlock, 5, dbw, VarType.Byte, 1);
+				var length = (byte) await _plc.ReadAsync(DataType.DataBlock, 5, dbw, VarType.Byte, 1, 0, ct);
 				dbw += 2;
 				for (var i = 0; i < count; i++)
 				{
-					var zaznam = (string)_plc.Read(DataType.DataBlock, 5, dbw, VarType.String, length);
+					var zaznam = (string) await _plc.ReadAsync(DataType.DataBlock, 5, dbw, VarType.String, length, 0, ct);
 					zaznam = Regex.Replace(zaznam, @"\p{C}+", string.Empty).TrimEnd(); // delete non-printable chars
 					zaznamy.Add(zaznam);
 					dbw += length + 2;

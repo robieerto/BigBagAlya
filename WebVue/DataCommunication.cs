@@ -84,14 +84,14 @@ namespace WebVue
 					{
 						try
 						{
-							var data = connection.ReadData(2694, 2);
+							var data = await connection.ReadData(2694, 2);
 							if (data != null)
 							{
 								dataProfinet.AddRange(data);
 							}
 
-							var programy = connection.ReadArray(10, 6, "4.0");
-							var uzivatelia = connection.ReadArray(30, 710, "4.1");
+							var programy = await connection.ReadArray(10, 6, "4.0");
+							var uzivatelia = await connection.ReadArray(30, 710, "4.1");
 
 							if (programy != null || uzivatelia != null)
 							{
@@ -174,7 +174,7 @@ namespace WebVue
 
 						foreach (var connection in connections)
 						{
-							connection.SetBitDataWereRead();
+							await connection.SetBitDataWereRead();
 						}
 					}
 
