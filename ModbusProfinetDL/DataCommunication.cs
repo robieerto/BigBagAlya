@@ -13,7 +13,7 @@ namespace ModbusProfinetDL
 		public static List<BigBagModel> dataProfinet;
 		public static ProfinetS7 profinet;
 
-		public static void ProfinetTask()
+		public static async Task ProfinetTask()
 		{
 			try
 			{
@@ -24,7 +24,7 @@ namespace ModbusProfinetDL
 				{
 					try
 					{
-						dataProfinet = profinet.ReadData(2694, 2);
+						dataProfinet = await profinet.ReadData(2694, 2);
 						if (dataProfinet != null)
 						{
 							CsvLayer.SaveBigBagData(dataProfinet);
@@ -35,7 +35,7 @@ namespace ModbusProfinetDL
 						Library.WriteLog(ex);
 					}
 
-					Task.Delay(3000);
+					await Task.Delay(3000);
 				}
 			}
 			catch (Exception ex)
