@@ -1,12 +1,12 @@
 {
 	"PathData": "",
 	"Device1": {
-		"ReadData": false,
+		"ReadData": true,
 		"IpAddress": "192.168.1.100",
 		"Port": "102"
 	},
 	"Device2": {
-		"ReadData": false,
+		"ReadData": true,
 		"IpAddress": "192.168.1.102",
 		"Port": "102"
 	},

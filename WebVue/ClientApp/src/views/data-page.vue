@@ -31,13 +31,13 @@
       <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :alignment="'right'" cell-template="poradieTemplate" />
       <dx-column data-field="id" caption="Id" :visible="false" />
       <dx-column data-field="vaha" caption="Hmotnosť (kg)" data-type="number" :format="floatFormat" />
-      <dx-column data-field="casVazenia" caption="Čas váženia" data-type="date" :format="dateFormat" />
+      <dx-column data-field="casVazenia" caption="Čas váženia" data-type="datetime" :format="dateFormat" />
       <dx-column data-field="zariadenieNazov" caption="Váha" :visible="!state.zariadenie" />
       <dx-column data-field="programNazov" caption="Program" />
       <!-- <dx-column data-field="programCislo" caption="Číslo programu" :width="130" /> -->
       <dx-column data-field="uzivatelNazov" caption="Užívateľ" />
       <!-- <dx-column data-field="uzivatelCislo" caption="Číslo užívateľa" :width="130" /> -->
-      <dx-column data-field="casVycitania" caption="Čas vyčítania dát" data-type="date" :format="dateFormat" />
+      <dx-column data-field="casVycitania" caption="Čas vyčítania dát" data-type="datetime" :format="dateFormat" />
       <!-- <dx-column data-field="Task_Priority" caption="Priority">
         <dx-lookup display-expr="name" value-expr="value" :data-source="priorities" />
       </dx-column> -->

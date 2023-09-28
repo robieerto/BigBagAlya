@@ -30,7 +30,7 @@ namespace WebVue.Controllers
 			{
 				var sortinfo = new DevExtreme.AspNet.Data.SortingInfo[]
 				{
-					new SortingInfo() {Desc = true, Selector = "id"},
+					new SortingInfo() {Desc = true, Selector = "casVazenia"},
 				};
 				loadOptions.Sort = sortinfo;
 			}
@@ -48,7 +48,7 @@ namespace WebVue.Controllers
 				Vaha = e.Vaha,
 				CasVazenia = e.CasVazenia,
 				CasVycitania = e.CasVycitania
-			}).OrderByDescending(e => e.Id);
+			}).OrderByDescending(e => e.CasVazenia);
 
 			return Json(await DataSourceLoader.LoadAsync(result, loadOptions));
 		}

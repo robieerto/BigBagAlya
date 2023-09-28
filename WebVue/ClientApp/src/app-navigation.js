@@ -9,15 +9,15 @@ export default [
     icon: 'folder',
     items: [
       {
-        text: 'Váha 1',
+        text: 'BB Starý (1)',
         path: '/data?vaha=1',
       },
       {
-        text: 'Váha 2',
+        text: 'BB Nový (2)',
         path: '/data?vaha=2',
       },
       {
-        text: 'Váha 3',
+        text: 'BB Krupica (3)',
         path: '/data?vaha=3',
       },
     ],
@@ -27,15 +27,15 @@ export default [
     icon: 'fields',
     items: [
       {
-        text: 'Váha 1',
+        text: 'BB Starý (1)',
         path: '/programy?vaha=1',
       },
       {
-        text: 'Váha 2',
+        text: 'BB Nový (2)',
         path: '/programy?vaha=2',
       },
       {
-        text: 'Váha 3',
+        text: 'BB Krupica (3)',
         path: '/programy?vaha=3',
       },
     ],
@@ -45,15 +45,15 @@ export default [
     icon: 'user',
     items: [
       {
-        text: 'Váha 1',
+        text: 'BB Starý (1)',
         path: '/uzivatelia?vaha=1',
       },
       {
-        text: 'Váha 2',
+        text: 'BB Nový (2)',
         path: '/uzivatelia?vaha=2',
       },
       {
-        text: 'Váha 3',
+        text: 'BB Krupica (3)',
         path: '/uzivatelia?vaha=3',
       },
     ],

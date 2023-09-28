@@ -87,10 +87,10 @@ const toCurrency = (value) =>
 
 const toDate = (value) => {
   if (!value) return '';
-  const date = new Date(value).toLocaleDateString('sk-SK');
+  const date = new Date(value).toLocaleString('sk-SK');
   if (date != 'Invalid Date') return date;
   else return '';
-};
+    };
 
 watch(
   () => props.title,
@@ -121,9 +121,9 @@ watch(
                 state.obdobieOd = toDate(e[2]);
               } else if (e.selectedFilterOperation == '<' || e.selectedFilterOperation == '<=') {
                 state.obdobieDo = toDate(e[2]);
-                let date = new Date(e[2]);
-                date.setDate(date.getDate() - 1);
-                state.obdobieDo = toDate(date);
+                //let date = new Date(e[2]);
+                //date.setDate(date.getDate() - 1);
+                //state.obdobieDo = toDate(date);
               } else if (e.selectedFilterOperation == '=') {
                 state.obdobieOd = toDate(e.filterValue);
                 state.obdobieDo = toDate(e.filterValue);
@@ -133,9 +133,9 @@ watch(
                 state.obdobieOd = toDate(thirdItem);
               } else if (secondItem == '<' || secondItem == '<=') {
                 state.obdobieDo = toDate(thirdItem);
-                let date = new Date(thirdItem);
-                date.setDate(date.getDate() - 1);
-                state.obdobieDo = toDate(date);
+                //let date = new Date(thirdItem);
+                //date.setDate(date.getDate() - 1);
+                //state.obdobieDo = toDate(date);
               }
             }
           } else if (e.columnIndex == 4) {
@@ -150,9 +150,9 @@ watch(
             state.obdobieOd = toDate(filter[2]);
           } else if (filter[1] == '<' || filter[1] == '<=') {
             state.obdobieDo = toDate(filter[2]);
-            let date = new Date(filter[2]);
-            date.setDate(date.getDate() - 1);
-            state.obdobieDo = toDate(date);
+            //let date = new Date(filter[2]);
+            //date.setDate(date.getDate() - 1);
+            //state.obdobieDo = toDate(date);
           }
         } else if (e == 'zariadenieNazov') {
           state.vaha = filter[2];

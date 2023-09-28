@@ -15,15 +15,15 @@
         <template #default>
           <div v-if="state.showData" class="d-flex justify-content-between">
             <div class="col h4 mb-0 mx-5">
-              <span class="align-middle">Váha 1: </span>
+              <span class="align-middle">BB Starý (1): </span>
               <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[0])]">{{ calculateVahaText(state?.vahyData[0]) }}</span>
             </div>
             <div class="col h4 mb-0 mx-5">
-              <span class="align-middle">Váha 2: </span>
+                <span class="align-middle">BB Nový (2): </span>
               <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[1])]">{{ calculateVahaText(state?.vahyData[1]) }}</span>
             </div>
             <div class="col h4 mb-0 mx-5">
-              <span class="align-middle">Váha 3: </span>
+              <span class="align-middle">BB Krupica (3): </span>
               <span :class="['badge ms-1', calculateVahaClass(state?.vahyData[2])]">{{ calculateVahaText(state?.vahyData[2]) }}</span>
             </div>
           </div>
