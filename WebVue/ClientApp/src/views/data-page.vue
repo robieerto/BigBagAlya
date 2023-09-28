@@ -176,7 +176,7 @@ function onRowRemoving(e) {
 }
 
 function exportToXls() {
-  if (state.zaznamyCount > -1) {
+  if (state.zaznamyCount > 50000) {
     alert('Nie je možné exportovať viac ako 50 000 záznamov');
     return;
   }
