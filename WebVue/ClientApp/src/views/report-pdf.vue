@@ -55,6 +55,14 @@
     <div class="container fs-4">
       <div class="row">
         <div class="col-3">
+          <strong>Počet vážení:</strong>
+        </div>
+        <div class="col-3">
+          {{ toCurrency(props.count) }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
           <strong>Hmotnosť spolu (kg):</strong>
         </div>
         <div class="col-3">
@@ -72,6 +80,7 @@ const props = defineProps({
   title: String,
   filter: Array,
   sum: Number,
+  count: Number,
 });
 
 const state = reactive({
@@ -90,7 +99,7 @@ const toDate = (value) => {
   const date = new Date(value).toLocaleString('sk-SK');
   if (date != 'Invalid Date') return date;
   else return '';
-    };
+};
 
 watch(
   () => props.title,
@@ -105,7 +114,7 @@ watch(
     state.vaha = props.title;
     state.program = 'Všetky programy';
     state.uzivatel = 'Všetci užívatelia';
-    console.log(filter);
+    // console.log(filter);
     if (filter?.length) {
       filter.forEach((e) => {
         if (e && Array.isArray(e)) {
@@ -163,7 +172,7 @@ watch(
         }
       });
     }
-    console.log(state);
+    // console.log(state);
   },
 );
 </script>

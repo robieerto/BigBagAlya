@@ -5,7 +5,10 @@
         <h2 class="content-block">{{ title }}</h2>
         <button type="button" class="btn btn-primary h-50 m-3" @click="reloadData">Obnoviť</button>
       </div>
-      <button type="button" class="btn btn-secondary h-100 m-3" @click="exportToPdf">Exportovať</button>
+      <div>
+        <button type="button" class="btn btn-success h-50 m-3 mr-0" @click="exportToXls">Exportovať do XLSX</button>
+        <button type="button" class="btn btn-secondary h-50 m-3 ml-0" @click="exportToPdf">Exportovať do PDF</button>
+      </div>
     </div>
 
     <dx-data-grid
@@ -28,7 +31,8 @@
       <dx-pager :show-page-size-selector="true" :show-info="true" :allowed-page-sizes="[5, 10, 20, 50, 100]" />
       <dx-filter-row :visible="true" />
       <dx-editing :allow-adding="false" :allow-updating="false" :allow-deleting="true" :confirm-delete="true" />
-      <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :alignment="'right'" cell-template="poradieTemplate" />
+      <dx-export :enabled="false"></dx-export>
+      <dx-column caption="Riadok" :allow-search="false" :allow-sorting="false" :allow-exporting="true" :alignment="'right'" cell-template="poradieTemplate" />
       <dx-column data-field="id" caption="Id" :visible="false" />
       <dx-column data-field="vaha" caption="Hmotnosť (kg)" data-type="number" :format="floatFormat" />
       <dx-column data-field="casVazenia" caption="Čas váženia" data-type="datetime" :format="dateFormat" />
@@ -42,6 +46,7 @@
         <dx-lookup display-expr="name" value-expr="value" :data-source="priorities" />
       </dx-column> -->
       <DxSummary>
+        <DxTotalItem column="Riadok" summary-type="count" />
         <DxTotalItem column="vaha" summary-type="sum" :value-format="bigFloatFormat" />
       </DxSummary>
       <template #poradieTemplate="{ data }">{{ calculatePoradie(data.row.rowIndex) }}</template>
@@ -64,7 +69,7 @@
       ref="html2pdfRef"
     >
       <template v-slot:pdf-content>
-        <ReportPdf :title="vaha" :filter="state.combinedFilter" :sum="state.vahaSum" />
+        <ReportPdf :title="vaha" :filter="state.combinedFilter" :sum="state.vahaSum" :count="state.zaznamyCount" />
       </template>
     </vue3-html2pdf>
   </div>
@@ -72,7 +77,7 @@
 
 <script setup>
 import 'devextreme/data/odata/store';
-import DxDataGrid, { DxColumn, DxFilterRow, DxPager, DxPaging, DxTotalItem, DxSummary, DxEditing } from 'devextreme-vue/data-grid';
+import DxDataGrid, { DxColumn, DxFilterRow, DxPager, DxPaging, DxTotalItem, DxSummary, DxEditing, DxExport } from 'devextreme-vue/data-grid';
 import DataSource from 'devextreme/data/data_source';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 import { computed, reactive, ref, watch } from 'vue';
@@ -81,7 +86,13 @@ import { useRoute } from 'vue-router';
 import Vue3Html2pdf from 'vue3-html2pdf';
 import ReportPdf from './report-pdf';
 
+import { exportDataGrid } from 'devextreme/excel_exporter';
+import { Workbook } from 'exceljs';
+import saveAs from 'file-saver';
+
 const route = useRoute();
+
+const html2pdfRef = ref();
 
 const floatFormat = '#,##0.00';
 const bigFloatFormat = '#,##0.00';
@@ -101,7 +112,7 @@ const vaha = computed(() => {
   } else return 'Všetky váhy';
 });
 
-const html2pdfRef = ref();
+const calculatePoradie = (rowIndex) => 1 + rowIndex + state.dataGridInstance.pageIndex() * state.dataGridInstance.pageSize();
 
 const state = reactive({
   dataSource: new DataSource({
@@ -125,6 +136,7 @@ const state = reactive({
   dataGridInstance: null,
   zariadenie: route.query.vaha,
   vahaSum: 0,
+  zaznamyCount: 0,
   combinedFilter: [],
   actualRowId: null,
 });
@@ -143,6 +155,7 @@ function onDataGridInitialized(e) {
 
 function onContentReady() {
   state.vahaSum = state.dataGridInstance?.getTotalSummaryValue('vaha');
+  state.zaznamyCount = state.dataSource.totalCount();
   state.combinedFilter = state.dataGridInstance?.getCombinedFilter();
 }
 
@@ -162,5 +175,28 @@ function onRowRemoving(e) {
   state.actualRowId = e.key;
 }
 
-const calculatePoradie = (rowIndex) => rowIndex + state.dataGridInstance.pageIndex() * state.dataGridInstance.pageSize();
+function exportToXls() {
+  if (state.zaznamyCount > -1) {
+    alert('Nie je možné exportovať viac ako 50 000 záznamov');
+    return;
+  }
+  const workbook = new Workbook();
+  const worksheet = workbook.addWorksheet('Harok1');
+  exportDataGrid({
+    component: state.dataGridInstance,
+    worksheet: worksheet,
+    customizeCell: function (options) {
+      options.excelCell.font = { name: 'Arial', size: 12 };
+      options.excelCell.alignment = { horizontal: 'left' };
+
+      if (options.gridCell.rowType === 'data' && options.gridCell.column.caption === 'Riadok') {
+        options.excelCell.value = options.excelCell.row - 1;
+      }
+    },
+  }).then(function () {
+    workbook.xlsx.writeBuffer().then(function (buffer) {
+      saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'BigBagData.xlsx');
+    });
+  });
+}
 </script>
